@@ -139,7 +139,7 @@ if ($row = mysqli_fetch_assoc($res)) {
                    onmouseover="this.style.backgroundColor='#3399cc'; this.style.color='#fff'"
                    onmouseout="this.style.backgroundColor='#fff'; this.style.color='#3399cc'"
                 >Add to Cart</a>
-                <a href="buy.php?product_id=<?= $row['id'] ?>" 
+                <a href="buy.php?product_id=<?= $row['id'] ?>&name=<?=$row['product_name']?>" 
                    class="btn buy-now" 
                    onclick="event.stopPropagation();"
                    style="
