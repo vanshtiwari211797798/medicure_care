@@ -1,0 +1,201 @@
+<!-- Coupon Input Section -->
+<div class="price-row">
+    <span class="price-label">Apply Coupon</span>
+    <div class="coupon-input">
+        <input type="text" name="coupon_code_input" id="coupon_code" placeholder="Enter coupon code">
+        <button type="button" id="apply_coupon">Apply</button>
+    </div>
+    <div id="coupon_message" style="margin-top: 5px;"></div>
+</div>
+
+<!-- Hidden Fields -->
+<input type="hidden" id="discount_amount" value="0">
+<input type="hidden" id="coupon_id" name="coupon_id" value="">
+
+<!-- Available Coupons -->
+<div class="available-coupons">
+    <h4>Available Coupons</h4>
+    <?php
+    $coupon_query = mysqli_query($conn, "SELECT id, code, discount, expiry_date, is_active, max_discount 
+                                        FROM coupons 
+                                        WHERE is_active = 1 
+                                        AND expiry_date >= CURDATE()");
+    if (mysqli_num_rows($coupon_query) > 0):
+        while ($coupon = mysqli_fetch_assoc($coupon_query)):
+            ?>
+            <div class="coupon-item">
+                <div>
+                    <span>Code: <?= htmlspecialchars($coupon['code']) ?></span><br>
+                    <span>Discount: <?= htmlspecialchars($coupon['discount']) ?>%</span><br>
+                    <span>Expires: <?= htmlspecialchars($coupon['expiry_date']) ?></span>
+                </div>
+                <button type="button" class="copy-coupon"
+                    onclick="copyCoupon('<?= htmlspecialchars($coupon['code']) ?>')">
+                    Copy Code
+                </button>
+            </div>
+            <?php
+        endwhile;
+    else:
+        echo "<p>No active coupons available</p>";
+    endif;
+    ?>
+</div>
+
+<!-- JS Scripts -->
+<script>
+    let currentCoupon = null;
+
+    function copyCoupon(code) {
+        document.getElementById('coupon_code').value = code;
+        alert('Coupon code copied!');
+    }
+
+    function calculateDiscount(discountPercent, subtotal, maxDiscount) {
+        const discountAmount = (subtotal * discountPercent) / 100;
+        return maxDiscount > 0 ? Math.min(discountAmount, maxDiscount) : discountAmount;
+    }
+
+    function resetCoupon() {
+        currentCoupon = null;
+        document.getElementById('coupon_code').value = '';
+        document.getElementById('coupon_message').textContent = '';
+        document.getElementById('coupon_id').value = '';
+        updatePrice();
+    }
+
+    document.getElementById('apply_coupon').addEventListener('click', function () {
+        const couponCode = document.getElementById('coupon_code').value.trim();
+        const basePrice = parseFloat(document.getElementById('base_price').value);
+        const quantity = parseInt(document.getElementById('quantity').value);
+        const subtotal = basePrice * quantity;
+
+        if (!couponCode) {
+            document.getElementById('coupon_message').textContent = 'Please enter a coupon code';
+            document.getElementById('coupon_message').style.color = 'red';
+            return;
+        }
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', 'validate_coupon.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            if (this.status === 200) {
+                const response = JSON.parse(this.responseText);
+                if (response.success) {
+                    currentCoupon = {
+                        id: response.coupon_id,
+                        code: couponCode,
+                        discount: response.discount,
+                        max_discount: response.max_discount || 0
+                    };
+                    const discountAmount = calculateDiscount(response.discount, subtotal, currentCoupon.max_discount);
+                    const totalAmount = subtotal + parseFloat(document.getElementById('delivery_charge').value || 0) - discountAmount;
+
+                    document.getElementById('coupon_message').textContent = response.message;
+                    document.getElementById('coupon_message').style.color = 'green';
+                    document.getElementById('discount_amount').value = discountAmount.toFixed(2);
+                    document.getElementById('coupon_id').value = currentCoupon.id;
+                    updatePrice();
+                } else {
+                    document.getElementById('coupon_message').textContent = response.message;
+                    document.getElementById('coupon_message').style.color = 'red';
+                    resetCoupon();
+                }
+            } else {
+                document.getElementById('coupon_message').textContent = 'Error validating coupon';
+                document.getElementById('coupon_message').style.color = 'red';
+            }
+        };
+        xhr.send('coupon_code=' + encodeURIComponent(couponCode) + '&amount=' + subtotal);
+    });
+
+    function updatePrice() {
+        const quantity = parseInt(document.getElementById('quantity').value);
+        const basePrice = parseFloat(document.getElementById('base_price').value);
+        const deliveryCharge = parseFloat(document.getElementById('delivery_charge').value || 0);
+        const subtotal = basePrice * quantity;
+        let discountAmount = 0;
+
+        if (currentCoupon) {
+            discountAmount = calculateDiscount(currentCoupon.discount, subtotal, currentCoupon.max_discount);
+        }
+
+        const totalAmount = subtotal + deliveryCharge - discountAmount;
+
+        document.getElementById('quantity-display').textContent = quantity;
+        document.getElementById('item-price').textContent = '₹' + basePrice.toFixed(2);
+        document.getElementById('subtotal').textContent = '₹' + subtotal.toFixed(2);
+        document.getElementById('delivery-charge').textContent = '₹' + deliveryCharge.toFixed(2);
+        document.getElementById('total-amount').textContent = '₹' + totalAmount.toFixed(2);
+        document.getElementById('pay-amount').textContent = '₹' + totalAmount.toFixed(2);
+        document.getElementById('total_amount').value = totalAmount.toFixed(2);
+
+        // Discount row update
+        const existingRow = document.getElementById('discount-row');
+        if (discountAmount > 0) {
+            if (!existingRow) {
+                const row = document.createElement('div');
+                row.className = 'price-row';
+                row.id = 'discount-row';
+                row.innerHTML = `
+                    <span class="price-label">Discount Applied (${currentCoupon.discount}%)</span>
+                    <span class="price-value" id="discount-value">-₹${discountAmount.toFixed(2)}</span>`;
+                document.querySelector('.price-breakdown').insertBefore(row, document.querySelector('.total-row'));
+            } else {
+                document.getElementById('discount-value').textContent = '-₹' + discountAmount.toFixed(2);
+            }
+        } else if (existingRow) {
+            existingRow.remove();
+        }
+    }
+
+    // Quantity handling
+    const quantityInput = document.getElementById('quantity');
+    document.getElementById('increase-qty').addEventListener('click', function () {
+        if (parseInt(quantityInput.value) < 10) {
+            quantityInput.value = parseInt(quantityInput.value) + 1;
+            updatePrice();
+        }
+    });
+    document.getElementById('decrease-qty').addEventListener('click', function () {
+        if (parseInt(quantityInput.value) > 1) {
+            quantityInput.value = parseInt(quantityInput.value) - 1;
+            updatePrice();
+        }
+    });
+    quantityInput.addEventListener('change', function () {
+        let qty = parseInt(quantityInput.value);
+        if (qty < 1) qty = 1;
+        if (qty > 10) qty = 10;
+        quantityInput.value = qty;
+        updatePrice();
+    });
+
+    // Form validation
+    function validateForm() {
+        let isValid = true;
+        const fields = ['name', 'email', 'phone', 'address', 'pincode'];
+        const patterns = {
+            email: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+            phone: /^\d{10}$/,
+            pincode: /^\d{6}$/
+        };
+
+        fields.forEach(field => {
+            const input = document.getElementById(field).value.trim();
+            const errorElem = document.getElementById(field + '-error');
+            if ((field === 'name' && input.length < 3) ||
+                (field === 'address' && input.length < 10) ||
+                (patterns[field] && !patterns[field].test(input))) {
+                errorElem.style.display = 'block';
+                isValid = false;
+            } else {
+                errorElem.style.display = 'none';
+            }
+        });
+
+        if (!isValid) window.scrollTo({ top: 0, behavior: 'smooth' });
+        return isValid;
+    }
+</script>

@@ -1,0 +1,87 @@
+[2025-04-20 20:16:30] Starting COD processing
+[2025-04-20 20:16:30] Preparing SQL: INSERT INTO orders (
+                product_id, product_name, quantity, source_table, name, 
+                address, status, price, image, payment_status, order_date, 
+                email, phone, pincode, payment_id, payment_method, 
+                delivery_charge, is_offer_product
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, 0)
+[2025-04-20 20:17:31] Starting COD processing
+[2025-04-20 20:17:31] Preparing SQL: INSERT INTO orders (
+                product_id, product_name, quantity, source_table, name, 
+                address, status, price, image, payment_status, order_date, 
+                email, phone, pincode, payment_id, payment_method, 
+                delivery_charge, is_offer_product
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, 0)
+[2025-04-20 20:17:31] Order 2 processed successfully
+[2025-04-20 20:41:23] Starting COD processing
+[2025-04-20 20:41:23] Preparing SQL: INSERT INTO orders (
+                product_id, product_name, quantity, source_table, name, 
+                address, status, price, image, payment_status, order_date, 
+                email, phone, pincode, payment_id, payment_method, 
+                delivery_charge, is_offer_product
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, 0)
+[2025-04-20 20:41:23] Order 4 processed successfully
+[2025-04-21 09:07:02] Starting COD processing
+[2025-04-21 09:07:02] Preparing SQL: INSERT INTO orders (
+                product_id, product_name, quantity, source_table, name, 
+                address, status, price, image, payment_status, order_date, 
+                email, phone, pincode, payment_id, payment_method, 
+                delivery_charge, is_offer_product
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, 0)
+[2025-04-21 09:07:02] Order 25 processed successfully
+[2025-04-21 09:27:29] Starting COD processing
+[2025-04-21 09:27:29] Preparing SQL: INSERT INTO orders (
+                product_id, product_name, quantity, source_table, name, 
+                address, status, price, image, payment_status, order_date, 
+                email, phone, pincode, payment_id, payment_method, 
+                delivery_charge, is_offer_product
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, 0)
+[2025-04-21 09:27:29] Order 28 processed successfully
+[2025-04-21 09:28:46] Starting COD processing
+[2025-04-21 09:28:46] Preparing SQL: INSERT INTO orders (
+                product_id, product_name, quantity, source_table, name, 
+                address, status, price, image, payment_status, order_date, 
+                email, phone, pincode, payment_id, payment_method, 
+                delivery_charge, is_offer_product
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, 0)
+[2025-04-21 09:28:46] Order 30 processed successfully
+[2025-04-21 10:57:26] Starting COD processing
+[2025-04-21 10:57:26] Preparing SQL: INSERT INTO orders (
+                product_id, product_name, quantity, source_table, name, 
+                address, status, price, image, payment_status, order_date, 
+                email, phone, pincode, payment_id, payment_method, 
+                delivery_charge, is_offer_product
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, 0)
+[2025-04-21 10:57:26] Order 32 processed successfully
+[2025-04-22 09:21:17] Starting COD processing
+[2025-04-22 09:21:17] Preparing SQL: INSERT INTO orders (
+                product_id, product_name, quantity, source_table, name, 
+                address, status, price, image, payment_status, order_date, 
+                email, phone, pincode, payment_id, payment_method, 
+                delivery_charge, is_offer_product
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, 0)
+[2025-04-22 09:21:17] Order 35 processed successfully
+[2025-04-22 09:50:58] Starting COD processing
+[2025-04-22 09:50:58] Preparing SQL: INSERT INTO orders (
+                product_id, product_name, quantity, source_table, name, 
+                address, status, price, image, payment_status, order_date, 
+                email, phone, pincode, payment_id, payment_method, 
+                delivery_charge, is_offer_product
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, 0)
+[2025-04-22 09:50:58] Order 37 processed successfully
+[2025-04-22 16:05:53] Starting COD processing
+[2025-04-22 16:05:53] Preparing SQL: INSERT INTO orders (
+                product_id, product_name, quantity, source_table, name, 
+                address, status, price, image, payment_status, order_date, 
+                email, phone, pincode, payment_id, payment_method, 
+                delivery_charge, is_offer_product
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, 0)
+[2025-04-22 16:05:53] Order 43 processed successfully
+[2025-04-23 07:39:24] Starting COD processing
+[2025-04-23 07:39:24] Preparing SQL: INSERT INTO orders (
+                product_id, product_name, quantity, source_table, name, 
+                address, status, price, image, payment_status, order_date, 
+                email, phone, pincode, payment_id, payment_method, 
+                delivery_charge, is_offer_product
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, 0)
+[2025-04-23 07:39:24] Order 50 processed successfully
