@@ -122,7 +122,7 @@ include("./includes/conn.php");
                         <div class='btn-group'>
                             <a href="add_to_cart.php?table=products&id=<?= $product_id ?>" class="btn add-to-cart">Add to
                                 Cart</a>
-                            <a href="buy.php?table=products&product_id=<?= $product_id ?>" class="btn buy-now">Buy Now</a>
+                            <a href="buy.php?table=products&product_id=<?= $product_id ?>&name=<?=$product_name?>" class="btn buy-now">Buy Now</a>
                         </div>
                     </div>
                     <?php

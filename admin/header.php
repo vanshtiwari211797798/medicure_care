@@ -28,7 +28,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
         <div class="dropdown-container">
             <a href="slider.php"><i class="fas fa-sliders-h"></i> Slider Section</a>
             <a href="Category.php"><i class="fas fa-tags"></i> Category</a>
-            <a href="products.php"><i class="fas fa-box-open"></i> Category Products</a>
+            <a href="products.php"><i class="fas fa-box-open"></i> Add Products</a>
             <a href="banner.php"><i class="fas fa-image"></i> Banner</a>
             <!-- <a href="LatestProducts.php"><i class="fas fa-star"></i> Latest Products</a> -->
             <a href="HealthArticles.php"><i class="fas fa-newspaper"></i> Health Articles</a>
