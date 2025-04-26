@@ -52,7 +52,7 @@ include("includes/conn.php");
             if (mysqli_num_rows($data) > 0) {
                 while ($row = mysqli_fetch_array($data)) {
                     ?>
-                    <div class="product-card" onclick="window.location.href='product-detail.php?product_id=<?= $row['id'] ?>'"
+                    <div class="product-card" onclick="window.location.href='product-detail.php?product_id=<?= $row['id'] ?>&name=<?=$row['product_name']?>'"
                         style="cursor: pointer;">
                         <?php if ($row['discount'] > 0): ?>
                             <div class="discount-badge"><?= $row['discount'] ?>% OFF</div>
@@ -94,7 +94,7 @@ include("includes/conn.php");
                             <div class="button-group">
                                 <a href="add_to_cart.php?table=products&id=<?= $row['id'] ?>" class="btn add-to-cart"
                                     onclick="event.stopPropagation();">Add to Cart</a>
-                                <a href="buy.php?product_id=<?= $row['id'] ?>" class="btn buy-now"
+                                <a href="buy.php?product_id=<?= $row['id'] ?>&name=<?=$row['product_name']?>" class="btn buy-now"
                                     onclick="event.stopPropagation();">Buy Now</a>
                             </div>
                         </div>

@@ -108,7 +108,7 @@ include("./includes/conn.php");
                     $discount = $row['discount'];
                     $stock = $row['stock'];
                     ?>
-                    <div class="product-card" onclick="window.location.href='product-detail.php?product_id=<?= $row['id'] ?>'"
+                    <div class="product-card" onclick="window.location.href='product-detail.php?product_id=<?= $row['id'] ?>&name=<?=$product_name?>'"
                         style="cursor: pointer;">
                         <span class='discount-badge'><?= $discount ?>% OFF</span>
                         <img src='<?= $image ?>' alt='<?= $product_name ?>'>
@@ -219,7 +219,7 @@ include("./includes/conn.php");
                     $discount = $row['discount'];
                     $stock = $row['stock'];
                     ?>
-                    <div class="product-card" onclick="window.location.href='product-detail.php?product_id=<?= $row['id'] ?>'"
+                    <div class="product-card" onclick="window.location.href='product-detail.php?product_id=<?= $row['id'] ?>&name=<?=$product_name?>'"
                     style="cursor: pointer;">
                         <span class='discount-badge'><?= $discount ?>% OFF</span>
                         <img src='<?= $image ?>' alt='<?= $product_name ?>'>

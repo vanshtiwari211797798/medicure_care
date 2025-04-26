@@ -161,6 +161,53 @@ if ($row = mysqli_fetch_assoc($res)) {
         </div>
     </div>
 </div>
+<section id="featured-products">
+    <div class="container_featured-products">
+        <h2>Similor Products</h2>
+
+        <div class="product-grid">
+            <?php
+           $name = isset($_GET['name']) ? $_GET['name'] : '';
+           $product_id = isset($_GET['product_id']) ? $_GET['product_id'] : '';
+            $result = $conn->query("SELECT * FROM products WHERE product_name = '$name' AND id !='$product_id' ORDER BY id DESC LIMIT 8");
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $product_id = $row['id'];
+                    $product_name = $row['product_name'];
+                    $desc = $row['description'];
+                    $image = "admin/uploads/" . $row['image'];
+                    $net_price = number_format($row['price'], 2);
+                    $selling_price = number_format($row['sale_price'], 2);
+                    $discount = $row['discount'];
+                    $stock = $row['stock'];
+                    ?>
+                    <div class="product-card" onclick="window.location.href='product-detail.php?product_id=<?= $row['id'] ?>&name=<?=$product_name?>'"
+                        style="cursor: pointer;">
+                        <span class='discount-badge'><?= $discount ?>% OFF</span>
+                        <img src='<?= $image ?>' alt='<?= $product_name ?>'>
+                        <h3><?= $product_name ?></h3>
+                        <p><?= $desc ?></p>
+                        <p class='price'>
+                            <span class='old-price'>₹<?= $net_price ?></span>
+                            ₹<?= $selling_price ?>
+                        </p>
+                        <p><strong>Stock:</strong> <?= ($stock > 0 ? 'In Stock' : 'Out of Stock') ?></p>
+                        <div class='btn-group'>
+                            <a href="add_to_cart.php?table=products&id=<?= $product_id ?>" class="btn add-to-cart">Add to
+                                Cart</a>
+                            <a href="buy.php?table=products&product_id=<?= $product_id ?>&name=<?=$product_name?>" class="btn buy-now">Buy Now</a>
+                        </div>
+                    </div>
+                    <?php
+                }
+            } else {
+                echo "<p>No Similors Products found.</p>";
+            }
+            ?>
+        </div>
+    </div>
+</section>
 
 <script>
     // copyCoupon
