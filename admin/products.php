@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Process main product data first
     $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
     $product_name = trim($_POST['product_name']);
+    $qty = trim($_POST['qty']);
     $description = trim($_POST['description']);
     $price = (float) $_POST['price'];
     $delivery = (int) $_POST['delivery'];
@@ -57,9 +58,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($id > 0) {
         // Update existing product
-        $stmt = $conn->prepare("UPDATE products SET product_name=?, description=?, price=?, delivery=?, stock=?, discount=?, gst=?, sale_price=?, category=?, image=?, sub_image1=?, sub_image2=?, sub_image3=? WHERE id=?");
+        $stmt = $conn->prepare("UPDATE products SET product_name=?,qty=?, description=?, price=?, delivery=?, stock=?, discount=?, gst=?, sale_price=?, category=?, image=?, sub_image1=?, sub_image2=?, sub_image3=? WHERE id=?");
         if ($stmt) {
-            $stmt->bind_param("ssdddddssssssi", $product_name, $description, $price, $delivery, $stock, $discount, $gst, $sale_price, $category, $image_name, $sub_image1, $sub_image2, $sub_image3, $id);
+            $stmt->bind_param("sssdddddssssssi", $product_name,$qty, $description, $price, $delivery, $stock, $discount, $gst, $sale_price, $category, $image_name, $sub_image1, $sub_image2, $sub_image3, $id);
             $stmt->execute();
         } else {
             $_SESSION['error'] = "Prepare failed: {$conn->error}";
@@ -68,9 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } else {
         // Insert new product
-        $stmt = $conn->prepare("INSERT INTO products (product_name, description, price, delivery, stock, discount, gst, sale_price, category, image, sub_image1, sub_image2, sub_image3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO products (product_name,qty, description, price, delivery, stock, discount, gst, sale_price, category, image, sub_image1, sub_image2, sub_image3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         if ($stmt) {
-            $stmt->bind_param("ssddddddsssss", $product_name, $description, $price, $delivery, $stock, $discount, $gst, $sale_price, $category, $image_name, $sub_image1, $sub_image2, $sub_image3);
+            $stmt->bind_param("sssddddddsssss", $product_name,$qty,$description, $price, $delivery, $stock, $discount, $gst, $sale_price, $category, $image_name, $sub_image1, $sub_image2, $sub_image3);
             $stmt->execute();
             $id = $stmt->insert_id; // Get the newly inserted product ID
         } else {
@@ -221,6 +222,11 @@ if (isset($_GET['delete'])) {
         <div class="form-group">
             <label>Product Name</label>
             <input type="text" name="product_name" value="<?= htmlspecialchars($product['product_name'] ?? '') ?>"
+                required>
+        </div>
+        <div class="form-group">
+            <label>Qty</label>
+            <input type="text" name="qty" value="<?= htmlspecialchars($product['qty'] ?? '') ?>"
                 required>
         </div>
 

@@ -105,7 +105,7 @@ if ($row = mysqli_fetch_assoc($res)) {
 
         <div id="right">
             <div class="product-info">
-                <h2><?= $row['product_name'] ?? $row['name'] ?? 'Unnamed Product' ?></h2>
+                <h2><?= $row['product_name'] ?? $row['name'] ?? 'Unnamed Product' ?> <?=$row['qty']?></h2>
                 <div class="price-section">
                     <span
                         class="current-price">₹<?= number_format($row['sale_price'] ?? $row['price'] ?? 0, 2) ?></span>
@@ -163,7 +163,7 @@ if ($row = mysqli_fetch_assoc($res)) {
 </div>
 <section id="featured-products">
     <div class="container_featured-products">
-        <h2>Similor Products</h2>
+        <h2>Similar Products</h2>
 
         <div class="product-grid">
             <?php
@@ -186,7 +186,7 @@ if ($row = mysqli_fetch_assoc($res)) {
                         style="cursor: pointer;">
                         <span class='discount-badge'><?= $discount ?>% OFF</span>
                         <img src='<?= $image ?>' alt='<?= $product_name ?>'>
-                        <h3><?= $product_name ?></h3>
+                        <h3><?= $product_name ?> <?=$row['qty']?></h3>
                         <p><?= $desc ?></p>
                         <p class='price'>
                             <span class='old-price'>₹<?= $net_price ?></span>
@@ -202,7 +202,7 @@ if ($row = mysqli_fetch_assoc($res)) {
                     <?php
                 }
             } else {
-                echo "<p>No Similors Products found.</p>";
+                echo "<p>No Similars Products found.</p>";
             }
             ?>
         </div>
