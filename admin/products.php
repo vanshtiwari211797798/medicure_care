@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     } else {
         // Insert new product
-        $stmt = $conn->prepare("INSERT INTO products (product_name,qty, description, price, delivery, stock, discount, gst, sale_price, category, image, sub_image1, sub_image2, sub_image3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO products (product_name,qty, description, price, delivery, stock, discount, gst, sale_price, category, image, sub_image1, sub_image2, sub_image3) VALUES (?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         if ($stmt) {
             $stmt->bind_param("sssddddddsssss", $product_name,$qty,$description, $price, $delivery, $stock, $discount, $gst, $sale_price, $category, $image_name, $sub_image1, $sub_image2, $sub_image3);
             $stmt->execute();
